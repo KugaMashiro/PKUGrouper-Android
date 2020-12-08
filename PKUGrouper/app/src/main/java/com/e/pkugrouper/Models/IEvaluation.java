@@ -5,8 +5,10 @@ public interface IEvaluation extends ISerializable{
     int getEvaluateeID();
     int getMissionID();
     double getScore();
-    void setEvaluationID(int evaluationID);
-    void setEvaluateeID(int evaluateeID);
-    void setMissionID(int missionID);
-    void setScore(double score);
+    void setEvaluationID(int _evaluationID);
+    void setEvaluateeID(int _evaluateeID);
+    void setMissionID(int _missionID);
+    void setScore(double _score);
+    String getTimeStamp();
+    void setTimeStamp(Stirng _timeStamp);
 }

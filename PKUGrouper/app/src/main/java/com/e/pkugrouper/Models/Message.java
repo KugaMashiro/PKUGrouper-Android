@@ -1,50 +1,102 @@
 package com.e.pkugrouper.Models;
 
 import java.util.List;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+
 
 public class Message implements  IMessage{
+    private int publisherID;
+    private String messageType;//这里应该是个枚举类型
+    private String messageContent;
+    private int reporteeID;//只有类型为report时才有，其余情况为0
+    private String timeStamp;
+
+    List<Integer> recipientIDs;
+
+
     @Override
     public int getPublisherID() {
-        return 0;
+        return publisherID;
     }
 
     @Override
     public void setPublisherID(int _ID) {
-
+        publisherID=_ID;
     }
 
     @Override
-    public int getType() {
-        return 0;
+    public String getType() {
+        return messageTypetype;
     }
 
     @Override
-    public void setType(int _type) {
-
+    public void setType(String _type) {
+        messageType=_type;
     }
 
     @Override
-    public List<Integer> getRecipientIDs() {
-        return null;
-    }
+    public String getTimeStamp(){return timeStamp;}
+
+    @Override
+    public void setTimeStamp(String _timeStamp){timeStamp=_timeStamp; }
 
     @Override
     public String getMessageContent() {
-        return null;
+        return messageContent;
     }
 
     @Override
     public void setMessageContent(String content) {
-
+        messageContent=content;
     }
 
     @Override
+    public int getReporteeID() {
+        if(messageType=="Report"){
+            return reporteeID;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    @Override
+    public void setReporteeID(int _ID) {
+        if(messageType=="Report") {
+            reporteeID=_ID;
+        }
+    }
+
+    @Override
+    public List<Integer> getRecipientIDs() {
+        return recipientIDs;
+    }
+
+
+    @Override
     public String toJSON() {
-        return null;
+        JSONObject object=new JSONObject();
+
+        object.put("timeStamp",timeStamp);
+        object.put("publisherID",publisherID);
+        object.put("type",messageType);
+        object.put("messageContent",messageContent);
+        object.put("reportee",reporteeID);
+
+        String objStr=JSON.tpJSONString(object);
+        return objStr;
     }
 
     @Override
     public void loadFromJSON(String JSONString) {
+        JSONObject object=JSON.parsePbject(JSONString);
 
+        timeStamp=object.getString("timeStamp");
+        publisherID=object.getIntValue("publisherID");
+        messageType=object.getString("type");
+        messageContent=object.getString("messageContent");
+        reporteeID=object.getIntValue("reportee");
     }
 }

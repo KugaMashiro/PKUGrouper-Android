@@ -1,14 +1,16 @@
 package com.e.pkugrouper.Models;
 
 import java.util.List;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 
 public class Mission implements IMission{
     private int ID;
     private String content;
     private String title;
-    private String state;//任务状态，这里应该有一个枚举类型
-    private int publisher;//发布者
+    private String state;
+    private int publisher;
     private int size;
 
     private String publishTime;
@@ -65,7 +67,12 @@ public class Mission implements IMission{
     public int getPublisher() {
         return publisher;
     }
-
+    
+    @Override
+    public void setPublisher(int _publisher) {
+    	publisher=_publisher;
+    }
+    
     @Override
     public int getSize() {
         return size;
@@ -84,7 +91,24 @@ public class Mission implements IMission{
     public String getExecutionStartTime(){return executionStartTime;}
     @Override
     public String getExecutionEndTime() {return executionEndTime;}
-
+    
+    @Override
+    public void setPublishTime(String _publishTime) {
+    	publishTime=_publishTime;
+    }
+    @Override
+    public void setApplicationEndTime(String _applicantionEndTime) {
+    	applicationEndTime=_applicantionEndTime;
+    }
+    @Override
+    public void setExecutionStartTime(String _executionStartTime) {
+    	executionStartTime=_executionStartTime;
+    }
+    @Override
+    public void setExecutionEndTime(String _executionEndTime) {
+    	executionEndTime=_executionEndTime;
+    }
+    
     @Override
     public List<Integer> getApplicantIDs() {
         return applicantIDs;
@@ -99,14 +123,26 @@ public class Mission implements IMission{
     public List<String> getChannels() {
         return channels;
     }
-
+    
+    @Override
+    public void setApplicantIDs(List<Integer> _ApplicantIDs) {
+    	applicantIDs=_ApplicantIDs;
+    }
+    @Override
+    public void setMemberIDs(List<Integer> _MemberIDs) {
+    	memberIDs=_MemberIDs;
+    }
+    @Override
+    public void setChannels(List<String> _Channels) {
+    	channels=_Channels;
+    }
 
 
 
     @Override
     public String toJSON() {
         JSONObject object=new JSONObject();
-
+        
         object.put("title",title);
         object.put("content",content);
         object.put("publisherID",publisher);
@@ -119,13 +155,13 @@ public class Mission implements IMission{
         object.put("executionEndTime",executionEndTime);
         object.put("tag",channels);
 
-        String objStr=JSON.tpJSONString(object);
+        String objStr=JSON.toJSONString(object);
         return objStr;
     }
 
     @Override
     public void loadFromJSON(String JSONString) {
-        JSONObject object=JSON.parsePbject(JSONString);
+        JSONObject object=JSON.parseObject(JSONString);
 
         title=object.getString("title");
         content=object.getString("content");
@@ -137,6 +173,6 @@ public class Mission implements IMission{
         applicationEndTime=object.getString("applicationEndTime");
         executionStartTime=object.getString("executionStartTime");
         executionEndTime=object.getString("executionEndTime");
-        channels=JSON.parseArray(object.getJSONArray("tag").toJSONString(),Integer.class);
+        channels=JSON.parseArray(object.getJSONArray("tag").toJSONString(),String.class);
     }
 }

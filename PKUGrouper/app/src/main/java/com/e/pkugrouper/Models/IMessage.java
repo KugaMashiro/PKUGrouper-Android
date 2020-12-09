@@ -16,4 +16,5 @@ public interface IMessage extends ISerializable{
     void setReporteeID(int _ID);
 
     List<Integer> getRecipientIDs();
+    void setRecipientIDs(List<Integer> _recipientIDs);
 }

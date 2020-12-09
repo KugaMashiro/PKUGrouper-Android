@@ -1,6 +1,8 @@
 package com.e.pkugrouper.Models;
 
 import java.util.List;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 public class User implements IUser{
     private String mailBox;
@@ -13,94 +15,108 @@ public class User implements IUser{
 
     private List<Integer> missionIDs;
     private List<Integer> messageIDs;
-    private List<Integer> violationIDs;//这个暂时不知道是什么
+    private List<Integer> violationIDs;
     private List<Integer> evaluationIDs;
 
     @Override
     public String getUserName() {
-        //返回用户名
         return userName;
     }
 
     @Override
     public void setUserName(String _userName) {
-        //修改用户名
-        userName=_userName
+        userName=_userName;
     }
 
+    
+    
+    @Override
+    public String getPassword() {
+    	return password;
+    }
+    
+    @Override
+    public void setPassword(String _password) {
+    	password=_password;
+    }
+   
+    
     @Override
     public String getMailBox() {
-        //返回邮箱
         return mailBox;
     }
 
     @Override
     public void setMailBox(String _mailBox) {
-        //设置邮箱
-        mailBox=_mailBox
+        mailBox=_mailBox;
     }
 
     @Override
     public int getUserID() {
-        //返回userID
         return userID;
     }
 
     @Override
     public void setUserID(int _userID) {
-        //设置userID
-        userID=_userID
+        userID=_userID;
     }
 
     @Override
     public String getContactInformation() {
-        //返回联系方式
         return contactInformation;
     }
 
     @Override
     public void setContactInformation(String _contactInformation) {
-        //设置联系方式
         contactInformation=_contactInformation;
     }
 
     @Override
     public List<Integer> getMessageIDs() {
-        //返回User的Message的ID,类型为integer的List
         return messageIDs;
     }
 
     @Override
     public List<Integer> getEvaluationIDs() {
-        //返回User的评价的ID，类型为integer的List
         return evaluationIDs;
     }
 
     @Override
     public List<Integer> getViolationIDs() {
-        //返回User的violation，类型为integer的List
-        //violationIDs不知道是什么
         return  violationIDs;
     }
 
     @Override
     public List<Integer> getMissionIDs() {
-        //返回User相关的任务的ID,类型为integer的List
         return missionIDs;
     }
 
     @Override
     public double getAverageScore(){
-        //返回平均评分
         return averageScore;
     }
 
     @Override
-    public void setAverageScore(_averageScore){
-        //修改平均分
+    public void setAverageScore(double _averageScore){
         averageScore=_averageScore;
     }
 
+    @Override
+    public void setMessageIDs(List<Integer> _messageIDs) {
+    	messageIDs=_messageIDs;
+    }
+    @Override
+    public void setEvaluationIDs(List<Integer> _evaluationIDs) {
+    	evaluationIDs=_evaluationIDs;
+    }
+    @Override
+    public void setMissionIDs(List<Integer> _missionIDs) {
+    	missionIDs=_missionIDs;
+    }
+    @Override
+    public void setViolationIDs(List<Integer> _violationIDs) {
+    	violationIDs=_violationIDs;
+    }
 
 
     @Override
@@ -114,15 +130,15 @@ public class User implements IUser{
         object.put("averageScore",averageScore);
 
 
-        String objStr=JSON.tpJSONString(object);
+        String objStr=JSON.toJSONString(object);
         return objStr;
     }
 
     @Override
     public void loadFromJSON(String JSONString) {
-        JSONObject object=JSON.parsePbject(JSONString);
+        JSONObject object=JSON.parseObject(JSONString);
 
-        mailbox=object.getString("mailbox");
+        mailBox=object.getString("mailbox");
         missionIDs=JSON.parseArray(object.getJSONArray("missionIDs").toJSONString(),Integer.class);
         evaluationIDs=JSON.parseArray(object.getJSONArray("evaluationIDs").toJSONString(),Integer.class);
         violationIDs=JSON.parseArray(object.getJSONArray("violationIDs").toJSONString(),Integer.class);

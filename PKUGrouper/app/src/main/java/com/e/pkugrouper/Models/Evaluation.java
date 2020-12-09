@@ -2,19 +2,23 @@ package com.e.pkugrouper.Models;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONArray;
 
 public class Evaluation implements IEvaluation{
     private int evaluationID;
     private int evaluateeID;
     private int missionID;
-    private int evaluatorID;
+    private int evaluaterID;
     private double score;
     private String timeStamp;
-
+    
     @Override
-    public int getEvaluatorID() {
-        return evaluatorID;
+    public int getEvaluationID() {
+    	return evaluationID;
+    }
+    
+    @Override
+    public int getEvaluaterID() {
+        return evaluaterID;
     }
 
     @Override
@@ -38,6 +42,11 @@ public class Evaluation implements IEvaluation{
     }
 
     @Override
+    public void setEvaluaterID(int _evaluaterID) {
+    	evaluaterID=_evaluaterID;
+    }
+    
+    @Override
     public void setEvaluateeID(int _evaluateeID) {
         evaluateeID=_evaluateeID;
     }
@@ -56,7 +65,7 @@ public class Evaluation implements IEvaluation{
     public String getTimeStamp(){return timeStamp;}
 
     @Override
-    public void setTimeStamp(Stirng _timeStamp){ timeStamp=_timeStamp;}
+    public void setTimeStamp(String _timeStamp){ timeStamp=_timeStamp;}
 
 
     @Override
@@ -64,21 +73,23 @@ public class Evaluation implements IEvaluation{
         JSONObject object=new JSONObject();
 
         object.put("timeStamp",timeStamp);
-        object.put("evaluaterID",evaluatorID);
+        object.put("evaluaterID",evaluaterID);
+        object.put("evaluateeID",evaluateeID);
         object.put("missionID",missionID);
         object.put("evaluationScore",score);
 
-        String objStr=JSON.tpJSONString(object);
+        String objStr=JSON.toJSONString(object);
         return objStr;
     }
 
     @Override
     public void loadFromJSON(String JSONString) {
-        JSONObject object=JSON.parsePbject(JSONString);
+        JSONObject object=JSON.parseObject(JSONString);
 
         timeStamp=object.getString("timeStamp");
-        evaluatorID=object.getIntValue("evaluatorID");
+        evaluaterID=object.getIntValue("evaluaterID");
         evaluateeID=object.getIntValue("evaluateeID");
+        missionID=object.getIntValue("missionID");
         score=object.getDoubleValue("evaluationScore");
     }
 }

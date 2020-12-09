@@ -3,14 +3,13 @@ package com.e.pkugrouper.Models;
 import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONArray;
 
 
 public class Message implements  IMessage{
     private int publisherID;
-    private String messageType;//这里应该是个枚举类型
+    private String messageType;
     private String messageContent;
-    private int reporteeID;//只有类型为report时才有，其余情况为0
+    private int reporteeID;
     private String timeStamp;
 
     List<Integer> recipientIDs;
@@ -28,7 +27,7 @@ public class Message implements  IMessage{
 
     @Override
     public String getType() {
-        return messageTypetype;
+        return messageType;
     }
 
     @Override
@@ -73,7 +72,12 @@ public class Message implements  IMessage{
     public List<Integer> getRecipientIDs() {
         return recipientIDs;
     }
-
+    
+    @Override
+    public void setRecipientIDs(List<Integer> _recipientIDs) {
+    	recipientIDs=_recipientIDs;
+    }
+    
 
     @Override
     public String toJSON() {
@@ -85,13 +89,13 @@ public class Message implements  IMessage{
         object.put("messageContent",messageContent);
         object.put("reportee",reporteeID);
 
-        String objStr=JSON.tpJSONString(object);
+        String objStr=JSON.toJSONString(object);
         return objStr;
     }
 
     @Override
     public void loadFromJSON(String JSONString) {
-        JSONObject object=JSON.parsePbject(JSONString);
+        JSONObject object=JSON.parseObject(JSONString);
 
         timeStamp=object.getString("timeStamp");
         publisherID=object.getIntValue("publisherID");

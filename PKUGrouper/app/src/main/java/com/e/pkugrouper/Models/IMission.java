@@ -14,17 +14,28 @@ public interface IMission extends ISerializable{
     void setState(String _state);
 
     int getPublisher();
+    void setPublisher(int _publisherID);
 
     int getSize();
     void setSize(int _size);
 
-    public String getPublishTime();
-    public String getApplicationEndTime();
-    public String getExecutionStartTime();
-    public String getExecutionEndTime();
+    String getPublishTime();
+    String getApplicationEndTime();
+    String getExecutionStartTime();
+    String getExecutionEndTime();
+    
+    void setPublishTime(String _publishTime);
+    void setApplicationEndTime(String _applicantionEndTime);
+    void setExecutionStartTime(String _executionStartTime);
+    void setExecutionEndTime(String _executionEndTime);
+    
 
     List<Integer> getApplicantIDs();
     List<Integer> getMemberIDs();
-    List<String> getchannels();
+    List<String> getChannels();
+    
+    void setApplicantIDs(List<Integer> _ApplicantIDs);
+    void setMemberIDs(List<Integer> _MemberIDs);
+    void setChannels(List<String> _Channels);
 
 }
